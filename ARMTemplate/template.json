@@ -24,13 +24,6 @@
       },
       "defaultValue": "main"
     },
-    "Project": {
-      "type": "string",
-      "metadata": {
-        "description": "Github repo subfolder"
-      },
-      "defaultValue": "6-woodgrove-helpdesk"
-    },
     "DidAuthority": {
       "type": "string",
       "metadata": {
@@ -111,7 +104,7 @@
         "hostNamesDisabled": false,
         "containerSize": 0,
         "dailyMemoryTimeQuota": 0,
-        "httpsOnly": false,
+        "httpsOnly": true,
         "redundancyMode": "None",
         "storageAccountRequired": false,
         "keyVaultReferenceIdentity": "SystemAssigned",

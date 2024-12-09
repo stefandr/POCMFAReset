@@ -15,7 +15,7 @@
       "metadata": {
         "description": "Github repo URL"
       },
-      "defaultValue": "https://github.com/Azure-Samples/active-directory-verifiable-credentials-dotnet.git"
+      "defaultValue": "https://github.com/stefandr/POCMFAReset.git"
     },
     "branch": {
       "type": "string",
@@ -23,13 +23,6 @@
         "description": "Github repo branch"
       },
       "defaultValue": "main"
-    },
-    "Project": {
-      "type": "string",
-      "metadata": {
-        "description": "Github repo subfolder"
-      },
-      "defaultValue": "6-woodgrove-helpdesk"
     },
     "DidAuthority": {
       "type": "string",

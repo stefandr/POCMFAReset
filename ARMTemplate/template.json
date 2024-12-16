@@ -161,10 +161,6 @@
               "value": "600"
             },
             {
-              "name": "PROJECT",
-              "value": "[parameters('Project')]"
-            },
-            {
               "name": "AzureAd__TenantId",
               "value": "[parameters('TenantId')]"
             },

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WoodgroveHelpdesk.Models {
+namespace OnboardWithTAP.Models {
     public class IssuanceRequest {
         public string authority { get; set; }
         public bool includeQRCode { get; set; }

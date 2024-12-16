@@ -15,7 +15,7 @@
       "metadata": {
         "description": "Github repo URL"
       },
-      "defaultValue": "https://github.com/stefandr/POCMFAReset.git"
+      "defaultValue": "https://github.com/stefandr/POCNewHire.git"
     },
     "branch": {
       "type": "string",
@@ -24,12 +24,61 @@
       },
       "defaultValue": "main"
     },
+    "Project": {
+      "type": "string",
+      "metadata": {
+        "description": "Github repo subfolder"
+      },
+      "defaultValue": "5-onboard-with-tap"
+    },
+    "TenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "Entra ID Tenant id"
+      },
+      "defaultValue": "<Tenant id>"
+    },
+    "ClientId": {
+      "type": "string",
+      "metadata": {
+        "description": "app's ClientId"
+      },
+      "defaultValue": "<ClientId>"
+    },
+    "ClientSecret": {
+      "type": "string",
+      "metadata": {
+        "description": "app's ClientSecret"
+      },
+      "defaultValue": "<ClientSecret>"
+    },
     "DidAuthority": {
       "type": "string",
       "metadata": {
         "description": "DidAuthority"
       },
       "defaultValue": "<DidAuthority>"
+    },
+    "CredentialType": {
+      "type": "string",
+      "metadata": {
+        "description": "CredentialType"
+      },
+      "defaultValue": "TrueIdentity"
+    },
+    "KeyIdentifier": {
+      "type": "string",
+      "metadata": {
+        "description": "KeyIdentifier"
+      },
+      "defaultValue": "<KeyIdentifier KeyVault URI>"
+    },
+    "TapGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "TapGroupName"
+      },
+      "defaultValue": "<Tap Group Name>"
     }
   },
   "variables": {
@@ -69,9 +118,6 @@
       "name": "[parameters('webAppName')]",
       "location": "[resourceGroup().location]",
       "kind": "app",
-      "identity": {
-        "type": "SystemAssigned"
-      },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
       ],
@@ -104,7 +150,7 @@
         "hostNamesDisabled": false,
         "containerSize": 0,
         "dailyMemoryTimeQuota": 0,
-        "httpsOnly": true,
+        "httpsOnly": false,
         "redundancyMode": "None",
         "storageAccountRequired": false,
         "keyVaultReferenceIdentity": "SystemAssigned",
@@ -126,16 +172,44 @@
               "value": "[parameters('Project')]"
             },
             {
+              "name": "AzureAd__TenantId",
+              "value": "[parameters('TenantId')]"
+            },
+            {
+              "name": "AzureAd__ClientId",
+              "value": "[parameters('ClientId')]"
+            },
+            {
+              "name": "AzureAd__ClientSecret",
+              "value": "[parameters('ClientSecret')]"
+            },
+            {
+              "name": "VerifiedID__TenantId",
+              "value": "[parameters('TenantId')]"
+            },
+            {
+              "name": "VerifiedID__ClientId",
+              "value": "[parameters('ClientId')]"
+            },
+            {
+              "name": "VerifiedID__ClientSecret",
+              "value": "[parameters('ClientSecret')]"
+            },
+            {
               "name": "VerifiedID__DidAuthority",
               "value": "[parameters('DidAuthority')]"
             },
             {
-              "name": "AppSettings__UseTeamsWebhook",
-              "value": "false"
+              "name": "VerifiedID__CredentialType",
+              "value": "[parameters('CredentialType')]"
             },
             {
-              "name": "AppSettings__TeamsWebhookURL",
-              "value": "...set to incoming webhook if you decide to use a Teams Webhook..."
+              "name": "AppSettings__KeyIdentifier",
+              "value": "[parameters('KeyIdentifier')]"
+            },
+            {
+              "name": "AzureAd__TapGroupName",
+              "value": "[parameters('TapGroupName')]"
             }
           ]
         }
@@ -198,7 +272,7 @@
         "netFrameworkVersion": "v6.0",
         "requestTracingEnabled": false,
         "remoteDebuggingEnabled": false,
-        "remoteDebuggingVersion": "VS2019",
+        "remoteDebuggingVersion": "VS2022",
         "httpLoggingEnabled": true,
         "acrUseManagedIdentityCreds": false,
         "logsDirectorySizeLimit": 35,

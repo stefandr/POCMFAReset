@@ -23,9 +23,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Azure.Core;
 using Microsoft.AspNetCore.Http;
-using WoodgroveHelpdesk.Models;
+using OnboardWithTAP.Models;
 
-namespace WoodgroveHelpdesk.Controllers {
+namespace OnboardWithTAP.Controllers {
     [Route("api/[action]")]
     [ApiController]
     public class CallbackController : Controller
@@ -179,6 +179,10 @@ namespace WoodgroveHelpdesk.Controllers {
                         }
                         result = resp;
                         break;
+                    case "selfie_taken":
+                        callback = JsonConvert.DeserializeObject<CallbackEvent>( reqState["callback"].ToString() );
+                        result = JObject.FromObject( new { status = requestStatus, message = "Selfie taken", photo = callback.photo } );
+                        break;
                     default:
                         result = JObject.FromObject( new { status = "error", message = $"Invalid requestStatus '{requestStatus}'" } );
                         rc = false;
@@ -189,6 +193,31 @@ namespace WoodgroveHelpdesk.Controllers {
                 rc = false;
             }
             return rc;
+        }
+
+        [AllowAnonymous]
+        [HttpPost( "/api/issuer/selfie/{id}" )]
+        public async Task<ActionResult> setSelfie( string id ) {
+            _log.LogTrace( this.Request.GetDisplayUrl() );
+            try {
+                string body = new System.IO.StreamReader( this.Request.Body ).ReadToEnd();
+                _log.LogTrace( body );
+                string dataImage = "data:image/jpeg;base64,";
+                int idx = body.IndexOf( ";base64," );
+                if (-1 == idx) {
+                    return BadRequest( new { error = "400", error_description = $"Image must be {dataImage}" } );
+                }
+                string photo = body.Substring( idx + 8 );
+                CallbackEvent callback = new CallbackEvent() {
+                    requestId = id,
+                    state = id,
+                    requestStatus = "selfie_taken",
+                    photo = photo
+                };
+                return await HandleRequestCallback( RequestType.Selfie, JsonConvert.SerializeObject( callback ) );
+            } catch (Exception ex) {
+                return BadRequest( new { error = "400", error_description = ex.Message } );
+            }
         }
 
         public JObject GetJsonFromJwtToken(string jwtToken)

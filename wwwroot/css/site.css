@@ -22,8 +22,7 @@ body {
 /* ---- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /*background-color: white;*/
-    background-color: #dbeadd;
+    background-color: white;
 }
 
 #wrap {
@@ -119,20 +118,9 @@ a:hover {
     color: #228B22;
 }
 
-.bg-black {
-    color:white;
-    background-color: black;
-}
 #message {
     /*font-size: calc(1rem + 1vw);*/
     font-size: 16px;
-}
-
-.banner {
-    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(/banner_image01.png);
-    background-position: center top;
-    background-size: cover;
-    height: 85px;
 }
 
 .monospacedText {
@@ -212,8 +200,6 @@ a:hover {
     flex-direction: column;
     float: left;
     margin-left: 15px;
-    background-color: white;
-    opacity = 1.0;
 }
 
 .verification-card__header {
@@ -230,18 +216,4 @@ a:hover {
 
 table {
     margin: 0 auto;
-}
-
-.marquee {
-    width: 450px;
-    line-height: 50px;
-    white-space: nowrap;
-    overflow: hidden;
-    box-sizing: border-box;
-    animation: marquee 15s linear infinite;
-}
-
-@keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
 }

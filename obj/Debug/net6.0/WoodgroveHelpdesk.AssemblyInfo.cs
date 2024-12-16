@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WoodgroveHelpdesk")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d590aaa8eb9cd830d6d4afdcbacb178aba80cca")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+339d99f2d369b8661a986131f834c8dc49359628")]
 [assembly: System.Reflection.AssemblyProductAttribute("WoodgroveHelpdesk")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WoodgroveHelpdesk")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

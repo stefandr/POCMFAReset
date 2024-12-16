@@ -5,30 +5,60 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @Configuration.GetSection( "AppSettings" )["CompanyName"] Helpdesk</title>
+    <title>@ViewData["Title"] - OnboardWithTAP</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WoodgroveHelpdesk.styles.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="~/OnboardWithTAP.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black box-shadow">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">                
+                <!--
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnboardWithTAP</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                -->                
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                                <img style="width:150px" src=@Configuration.GetSection( "AppSettings" )["CompanyLogo"] />
+                                <img style="width:75px" src=@Configuration.GetSection( "AppSettings" )["CompanyLogo"] />
                             </a>
                         </li>
+                        @if (!User.Identity.IsAuthenticated) {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Onboarding">Employee Onboarding</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Guest" asp-action="Onboarding">| Guest Onboarding</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="ResetMFA">| Reset MFA</a>
+                            </li>
+                        } else {
+                            <li class="nav-item">
+                                <a class="nav-link text-nw-white" asp-area="" asp-controller="Guest" asp-action="Reverify">Guest Reverification</a>
+                            </li>
+                            @if (User.IsInRole( Configuration.GetSection( "AzureAD" )["AllowedUserAdminRole"] )) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-nw-white" asp-area="" asp-controller="Employee" asp-action="RegisterNewHire">| Register New Hire</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nw-white" asp-area="" asp-controller="Guest" asp-action="TrustedPartners">| Trusted B2B Partners</a>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">| Privacy</a>
+                        </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
-        <div class="banner">
-
-        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -38,9 +68,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - @ViewData["Title"] - No data is retained by this website. 
-            Sample code available on github <a href="https://github.com/Azure-Samples/active-directory-verifiable-credentials-dotnet/tree/main/6-woodgrove-helpdesk" target="_blank">here</a>.
-            Documentation available <a href="https://aka.ms/verifiedfacecheck" target="_blank">here</a>.
+            &copy; 2023 - OnboardWithTAP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

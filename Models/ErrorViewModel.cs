@@ -1,4 +1,4 @@
-namespace WoodgroveHelpdesk.Models {
+namespace OnboardWithTAP.Models {
     public class ErrorViewModel {
         public string? RequestId { get; set; }
 

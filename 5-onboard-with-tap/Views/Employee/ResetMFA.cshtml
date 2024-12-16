@@ -1,11 +1,11 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Onboarding";
+    ViewData["Title"] = $"{Configuration.GetSection( "AppSettings" )["CompanyName"]} HelpDesk";
 }
 
 <div style="text-align: center;">
-    <h1>Employee Onboarding</h1>
+    <h1>Reset MFA</h1>
     @if (null != ViewData["displayName"]) {
         <h3>Welcome @ViewData["displayName"]</h3>
     }
@@ -13,19 +13,22 @@
         <div id="message">@ViewData["message"]</div>
     </div>
 
-    <div id="card-1" class="accountInfo verification-card">
-        <button type="button" id="get-vc" class="button">Step 1: Get your card to proof your identity</button>
+
+     <div id="card-1" class="accountInfo verification-card">
+        <button type="button" id="get-vc" class="button">Step 1: Get your card at MyAccount to prove your employment</button>
+        <p>To get support, you need to have your <a href="https://learn.microsoft.com/en-us/entra/verified-id/verifiable-credentials-configure-tenant-quick#myaccount-available-now-to-simplify-issuance-of-workplace-credentials" target="_blank">
+            VerifiedEmployee card</a> with a photo.</p>
         <div>
-            <br /><br />
-            <img width="177px" src=@Configuration.GetSection("AppSettings")["IdvLogoUrl"] />
+            <img width="177px" src="~/verifiedemployee-card.png" />
             <br />
             <a id="skip-issuance" class="skipButton">I already have my card</a>
         </div>
     </div>
 
+ 
     <div id="card-2" class="accountInfo verification-card">
-        <button type="button" id="verify-credential" class="button">Step 2: Present your TrueID card</button>
-        <p>Use the Authenticator to present your TrueIdentity card</p>
+        <button type="button" id="verify-credential" class="button">Step 2: Present your VerifiedEmployee card</button>
+        <p>Use the Authenticator to present your VerifiedEmployee card</p>
         <div id="qrcode" style="text-align:center"></div>
         <a id="check-result" class="skipButton" style="display:none">Continue</a>
     </div>
@@ -44,10 +47,10 @@
     </div>
 
     <div id="card-4" class="accountInfo verification-card" style="display:none">
-        Use the following information to onboard your work account in the Microsoft Authenticator app. Select 'Add account', 'Work or school account' and then 'Sign in'.<br/>
+        Use the following information to reset your work account in <a href="https://aka.ms/mysecurityinfo" target="_blank">mysecurityinfo</a> or in the Microsoft Authenticator app. Select 'Add account', 'Work or school account' and then 'Sign in'.<br/>
         <b>Account:</b><div id="userUpn" class="monospacedText">UPN</div> 
         <b>Temporary Access Pass:</b><div id="userTap" class="monospacedText">TAP</div>
-        <b>Valid until (UTC):</b><div id="tapExpires" class="monospacedText">UTC</div> 
+        <b>Valid until (UTC):</b><div id="tapExpires" class="monospacedText">UTC</div>     
     </div>
 
     <div id="card-5" class="accountInfo verification-card" style="display:none">
@@ -176,12 +179,7 @@
             }
         }
 
-         var email = '@ViewData["email"]'; 
-        if ("" != email) {
             showCard(1);
-        } else {
-            showCard('');
-        }
- 
+
     </script>
 </div>

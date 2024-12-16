@@ -69,11 +69,7 @@ namespace OnboardWithTAP.Controllers
             var user = mgClient.Users[oid].Request().Select("createdDateTime,employeeLeaveDateTime,userType").GetAsync().Result;
             if (null != user) {
                 if ( user.UserType == "Guest" ) {
-                    if (user.EmployeeLeaveDateTime.HasValue) {
-                        ViewData["message"] = $"Your guest account was created {user.CreatedDateTime.Value.UtcDateTime.ToString( "s" )} and needs reverification before {user.EmployeeLeaveDateTime.Value.UtcDateTime.ToString( "s" )}";
-                    } else {
-                        ViewData["message"] = $"Your guest account was created {user.CreatedDateTime.Value.UtcDateTime.ToString( "s" )}";
-                    }
+                    ViewData["message"] = $"Your guest account was created {user.CreatedDateTime.Value.UtcDateTime.ToString( "s" )} and needs reverification before {user.EmployeeLeaveDateTime.Value.UtcDateTime.ToString( "s" )}";
                 } else {
                     ViewData["message"] = "Your account is not a guest account and does not need reverification.";
                 }

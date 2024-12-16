@@ -352,6 +352,18 @@ namespace OnboardWithTAP.Controllers
             return View();
         }
 
+                /// <summary>
+        /// Onboarding landing page for a new hire user
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public IActionResult ResetMFA() {
+            _log.LogTrace( this.HttpContext.Request.GetDisplayUrl() );
+            ViewData["email"] = "";
+
+            return View();
+        }
+
         [AllowAnonymous]
         [HttpPost( "/api/createtap/{id}" )]
         public async Task<ActionResult> CreateTap( string id ) {
@@ -382,12 +394,6 @@ namespace OnboardWithTAP.Controllers
                         if (vc.claims.ContainsKey( "firstName" ) && vc.claims.ContainsKey( "lastName" )) {
                             firstName = vc.claims["firstName"].ToString();
                             lastName = vc.claims["lastName"].ToString();
-                        }
-                    }
-                    if (vc.type.Contains( "VerifiedEmployee" )) {
-                        if (vc.claims.ContainsKey( "givenName" ) && vc.claims.ContainsKey( "surname" )) {
-                            firstName = vc.claims["givenName"].ToString();
-                            lastName = vc.claims["surname"].ToString();
                         }
                     }
                 }
@@ -514,10 +520,6 @@ namespace OnboardWithTAP.Controllers
                 if ( !string.IsNullOrWhiteSpace( guestOnboarding ) && guestOnboarding == "1" ) {
                     request.requestedCredentials[0].type = "VerifiedEmployee";
                     request.requestedCredentials[0].acceptedIssuers = new List<string>(); // filter out trusted after presentation
-                    request.requestedCredentials[0].configuration.validation.faceCheck = new FaceCheck() {
-                        sourcePhotoClaimName = _configuration.GetValue( "VerifiedID:sourcePhotoClaimName", "photo" ),
-                        matchConfidenceThreshold = _configuration.GetValue( "VerifiedID:matchConfidenceThreshold", 70 )
-                    };
                 }
                 string jsonString = JsonConvert.SerializeObject( request, Newtonsoft.Json.Formatting.None, new JsonSerializerSettings {
                     NullValueHandling = NullValueHandling.Ignore

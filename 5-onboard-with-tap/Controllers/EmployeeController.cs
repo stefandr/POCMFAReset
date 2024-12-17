@@ -390,10 +390,15 @@ namespace OnboardWithTAP.Controllers
                 string firstName = null;
                 string lastName = null;
                 foreach (var vc in callback.verifiedCredentialsData) {
-                    if (vc.type.Contains( _configuration["VerifiedID:CredentialType"] )) {
+                     if (vc.type.Contains( _configuration["VerifiedID:CredentialType"] )) {
                         if (vc.claims.ContainsKey( "firstName" ) && vc.claims.ContainsKey( "lastName" )) {
                             firstName = vc.claims["firstName"].ToString();
                             lastName = vc.claims["lastName"].ToString();
+                        } else{
+                            if (vc.claims.ContainsKey( "givenName" ) && vc.claims.ContainsKey( "surname" )) {
+                            firstName = vc.claims["givenName"].ToString();
+                            lastName = vc.claims["surname"].ToString();
+                            }
                         }
                     }
                 }
